@@ -29,7 +29,9 @@ def uninstall(context):
     """Uninstall Captcha Support.
     """
     sm = context.getSiteManager()
-    sm.unregisterUtility(IKeyManager)
+    utility = sm.queryUtility(IKeyManager)
+    parent = utility.aq_parent
+    parent.manage_delObjects(['IKeyManager'])
     
 def is_installed(context):
     return not (queryUtility(IKeyManager) is None)
