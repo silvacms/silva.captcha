@@ -1,7 +1,7 @@
 Changelog
 ---------
 
-1.1 (unreleased)
+1.1 (2008-11-12)
 ~~~~~~~~~~~~~~~~
 
 * Add a ``validate`` method for Python Scripts and Code sources.
