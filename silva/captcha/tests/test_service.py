@@ -2,6 +2,8 @@
 # See also LICENSE.txt
 # $Id$
 
+from zope.component import queryMultiAdapter
+from silva.captcha import validate
 
 from Products.Five import zcml
 from Products import Five
@@ -34,6 +36,12 @@ class CaptchaTestCase(SilvaTestCase.SilvaTestCase):
         service_extensions = root.service_extensions
         self.failUnless(service_extensions.is_installed('silva.captcha'))
 
+        # And should get a captcha
+        captcha = queryMultiAdapter((root, root.REQUEST), name='captcha')
+        self.failIf(captcha is None)
+        # Invalid entry
+        self.failIf(captcha.verify(None))
+        self.failIf(validate(root, root.REQUEST, None))
 
     def test_20uninstall(self):
         """Uninstall should work.
