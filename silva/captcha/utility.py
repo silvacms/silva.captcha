@@ -18,7 +18,7 @@ class SilvaKeyManager(Folder):
 
     implements(IKeyManager)
 
-    meta_type = 'Silva Key Manager' 
+    meta_type = 'Silva Key Manager'
 
     def __init__(self):
         Folder.__init__(self)

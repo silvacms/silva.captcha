@@ -38,6 +38,24 @@ You can validate an captcha entry like this::
 This extension require at least `Silva`_ 2.0.7 or higher. You can have
 more information about `collective.captcha`_.
 
+Use in Python Script
+~~~~~~~~~~~~~~~~~~~~
+
+In your Python Script/Code Sources, you can use for example::
+
+  from silva.captcha import validate
+
+  request = context.REQUEST
+  input = request.form.get('captcha_field', None)
+  if not validate(context, context.REQUEST, input):
+      # Bad value
+  else:
+      # Good value
+
+
+This will validate (or not) the input of the captcha.
+
+
 Installation
 ------------
 
@@ -48,7 +66,7 @@ following section::
 
   [instance]
 
-  eggs = ... 
+  eggs = ...
         silva.captcha
 
   zcml = ...

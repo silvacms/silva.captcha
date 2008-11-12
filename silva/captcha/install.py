@@ -2,13 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
-def install(root):
-    """Install Captcha Support.
-    """
-    pass
-    
 from Products.Five.site.localsite import enableLocalSiteHook, FiveSite
 
+from zope.app.component.interfaces import ISite
 from zope.app.component.hooks import setSite
 from zope.component import queryUtility
 
@@ -20,8 +16,9 @@ from utility import SilvaKeyManager
 def install(context):
     """Install Captcha Support.
     """
-    enableLocalSiteHook(context)
-    setSite(context)
+    if not ISite.providedBy(context):
+        enableLocalSiteHook(context)
+        setSite(context)
     sm = context.getSiteManager()
     sm.registerUtility(IKeyManager, SilvaKeyManager())
 
@@ -32,7 +29,7 @@ def uninstall(context):
     utility = sm.queryUtility(IKeyManager)
     parent = utility.aq_parent
     parent.manage_delObjects(['IKeyManager'])
-    
+
 def is_installed(context):
     return not (queryUtility(IKeyManager) is None)
 
