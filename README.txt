@@ -47,7 +47,7 @@ In your Python Script/Code Sources, you can use for example::
 
   request = context.REQUEST
   input = request.form.get('captcha_field', None)
-  if not validate(context, context.REQUEST, input):
+  if not validate(context, request, input):
       # Bad value
   else:
       # Good value
