@@ -7,12 +7,6 @@ from Products.Five import zcml
 from Products import Five
 zcml.load_config('meta.zcml', Five)
 zcml.load_config('configure.zcml', Five)
-# Now it seems that SilvaTestCase try to do smart installPackage, but
-# fails since we need to load GenericSetup before. So this code should
-# endup before the import of SilvaTestCase
-from Products import GenericSetup
-zcml.load_config('meta.zcml', GenericSetup)
-zcml.load_config('configure.zcml', GenericSetup)
 
 from Products.Silva.tests import SilvaTestCase
 
@@ -54,7 +48,6 @@ import unittest
 def test_suite():
 
     # Load the Zope Product
-    ztc.installProduct('GenericSetup')
     ztc.installPackage('silva.captcha')
 
     # Load our ZCML, which add the extension as a Product
