@@ -4,7 +4,7 @@ Changelog
 1.2 (unreleased)
 ~~~~~~~~~~~~~~~~
 
-* ...
+* Fix installation in Silva 2.2.
 
 1.1 (2008-11-12)
 ~~~~~~~~~~~~~~~~

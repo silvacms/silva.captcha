@@ -3,6 +3,7 @@
 # $Id$
 
 from Products.Five.site.localsite import enableLocalSiteHook, FiveSite
+from Products.Five.site.interfaces import IFiveSiteManager
 
 from zope.app.component.interfaces import ISite
 from zope.app.component.hooks import setSite
@@ -20,15 +21,22 @@ def install(context):
         enableLocalSiteHook(context)
         setSite(context)
     sm = context.getSiteManager()
-    sm.registerUtility(IKeyManager, SilvaKeyManager())
+    # Yes. Five people are clever.
+    if IFiveSiteManager.providedBy(sm):
+        sm.registerUtility(IKeyManager, SilvaKeyManager())
+    else:
+        sm.registerUtility(SilvaKeyManager(), IKeyManager)
 
 def uninstall(context):
     """Uninstall Captcha Support.
     """
     sm = context.getSiteManager()
     utility = sm.queryUtility(IKeyManager)
-    parent = utility.aq_parent
-    parent.manage_delObjects(['IKeyManager'])
+    if IFiveSiteManager.providedBy(sm):
+        parent = utility.aq_parent
+        parent.manage_delObjects(['IKeyManager'])
+    else:
+        sm.unregisterUtility(utility, IKeyManager)
 
 def is_installed(context):
     return not (queryUtility(IKeyManager) is None)
