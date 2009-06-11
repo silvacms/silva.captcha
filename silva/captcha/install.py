@@ -2,7 +2,6 @@
 # See also LICENSE.txt
 # $Id$
 
-from Products.Five.site.localsite import enableLocalSiteHook, FiveSite
 from Products.Five.site.interfaces import IFiveSiteManager
 
 from zope.app.component.interfaces import ISite
@@ -10,22 +9,34 @@ from zope.app.component.hooks import setSite
 from zope.component import queryUtility
 
 from plone.keyring.interfaces import IKeyManager
+from five.localsitemanager import make_objectmanager_site
 
 from utility import SilvaKeyManager
+
+
+def clean_old_five_sm(context, create=True):
+    """Disable the old Five sucky SM.
+    """
+    from Products.Five.site.localsite import disableLocalSiteHook
+    disableLocalSiteHook(context)
+    if not create:
+        return None
+    make_objectmanager_site(context)
+    setSite(context)
+    return context.getSiteManager()
 
 
 def install(context):
     """Install Captcha Support.
     """
     if not ISite.providedBy(context):
-        enableLocalSiteHook(context)
+        make_objectmanager_site(context)
         setSite(context)
     sm = context.getSiteManager()
-    # Yes. Five people are clever.
     if IFiveSiteManager.providedBy(sm):
-        sm.registerUtility(IKeyManager, SilvaKeyManager())
-    else:
-        sm.registerUtility(SilvaKeyManager(), IKeyManager)
+        clean_old_five_sm(context, create=True)
+    sm.registerUtility(SilvaKeyManager(), IKeyManager)
+
 
 def uninstall(context):
     """Uninstall Captcha Support.
@@ -37,6 +48,7 @@ def uninstall(context):
         parent.manage_delObjects(['IKeyManager'])
     else:
         sm.unregisterUtility(utility, IKeyManager)
+
 
 def is_installed(context):
     return not (queryUtility(IKeyManager) is None)

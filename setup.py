@@ -28,7 +28,8 @@ setup(name='silva.captcha',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'setuptools',
-          'collective.captcha',
-      ],
+        'setuptools',
+        'collective.captcha',
+        'five.localsitemanager',
+        ],
       )
