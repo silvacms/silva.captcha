@@ -30,6 +30,6 @@ setup(name='silva.captcha',
       install_requires=[
         'setuptools',
         'collective.captcha',
-        'five.localsitemanager',
+        'silva.core.upgrade',
         ],
       )
