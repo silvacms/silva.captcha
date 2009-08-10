@@ -11,14 +11,12 @@ zcml.load_config('meta.zcml', Five)
 zcml.load_config('configure.zcml', Five)
 
 from Products.Silva.tests import SilvaTestCase
-
 from Testing import ZopeTestCase as ztc
 
 
 class CaptchaTestCase(SilvaTestCase.SilvaTestCase):
     """Test case for captcha integration.
     """
-
 
     def afterSetUp(self):
         """After set up, install the extension.
@@ -51,12 +49,18 @@ class CaptchaTestCase(SilvaTestCase.SilvaTestCase):
         self.failIf(root.service_extensions.is_installed('silva.captcha'))
 
 
+from Testing.ZopeTestCase.layer import onsetup as ZopeLiteLayerSetup
+
+@ZopeLiteLayerSetup
+def installPackage(name):
+    # plone sux0rZ
+    ztc.installPackage(name)
 
 import unittest
 def test_suite():
 
     # Load the Zope Product
-    ztc.installPackage('silva.captcha')
+    installPackage('silva.captcha')
 
     # Load our ZCML, which add the extension as a Product
     from silva import captcha

@@ -6,7 +6,13 @@ from zope.component import getMultiAdapter
 from AccessControl import ModuleSecurityInfo, allow_module
 from Products.Silva.ExtensionRegistry import extensionRegistry
 
+import formulator
+from Products.Formulator.FieldRegistry import FieldRegistry
+from Products.Formulator import StandardFields
+
 import install
+
+FieldRegistry.registerField(formulator.CaptchaField) # XXX fix icon
 
 def initialize(context):
     extensionRegistry.register(
