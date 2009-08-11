@@ -24,7 +24,6 @@ class CaptchaValidator(Validator.Validator):
             self.raise_error('captcha_invalid', field)
         return True # we don't need to return the value, it doesn't matter
 
-
 CaptchaValidatorInstance = CaptchaValidator()
 
 
@@ -33,7 +32,6 @@ class CaptchaWidget(Widget.Widget):
 
         renders the image and an input field
     """
-
     property_names = ['title', 'description', 'css_class', 'alternate_name']
     
     def render(self, field, key, value, REQUEST):
@@ -54,7 +52,6 @@ class CaptchaWidget(Widget.Widget):
 
     def render_view(self, field, value):
         return ''
-
 
 CaptchaWidgetInstance = CaptchaWidget()
 
