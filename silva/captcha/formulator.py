@@ -33,20 +33,9 @@ class CaptchaWidget(Widget.Widget):
 
         renders the image and an input field
     """
+
+    property_names = ['title', 'description', 'css_class', 'alternate_name']
     
-    default = DummyField.fields.StringField(
-        'default',
-        title='Default',
-        description='',
-        value='',
-        hidden=True,
-        required=0)
-
-    display_width = DummyField.fields.IntegerField(
-        'display_width', title='Display width',
-        description="The width in characters. Required.",
-        default=20, required=1)
-
     def render(self, field, key, value, REQUEST):
         """ render the widget
         """
@@ -57,7 +46,11 @@ class CaptchaWidget(Widget.Widget):
             "input", type="text", name=key,
             css_class=field.get_value('css_class'),
             value=value)
-        return '<div class="form-captcha">' + image + input + '</div>'
+        return (
+            '<div class="form-captcha">' +
+            '<div class="form-captcha-img">' + image + '</div>' +
+            '<div class="form-captcha-input">' + input + '</div>' +
+            '</div>')
 
     def render_view(self, field, value):
         return ''
@@ -70,3 +63,11 @@ class CaptchaField(Field.ZMIField):
     meta_type = 'CaptchaField'
     widget = CaptchaWidgetInstance
     validator = CaptchaValidatorInstance
+
+    def _get_default(self, key, value, REQUEST):
+        return ''
+
+    def get_value(self, id, **kw):
+        if id == 'hidden':
+            return False
+        return super(CaptchaField, self).get_value(id, **kw)
