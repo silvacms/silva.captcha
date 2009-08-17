@@ -1,8 +1,10 @@
 Changelog
 ---------
 
-1.2 (unreleased)
+1.2 (2009-08-17)
 ~~~~~~~~~~~~~~~~
+
+* Added Formulator field to easily add a captcha to Formulator forms.
 
 * Fix installation in Silva 2.2.
 

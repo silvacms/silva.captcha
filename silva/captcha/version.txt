@@ -1,2 +1,1 @@
 SilvaCaptcha 1.2
-
