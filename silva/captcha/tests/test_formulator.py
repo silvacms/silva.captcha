@@ -1,11 +1,13 @@
+# Copyright (c) 2008 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
 
 from Products.Five import zcml
-from Products import Five
-zcml.load_config('meta.zcml', Five)
-zcml.load_config('configure.zcml', Five)
 
 from Products.Silva.tests import SilvaTestCase
-from Testing import ZopeTestCase as ztc
+
+from Testing.ZopeTestCase.layer import onsetup as ZopeLiteLayerSetup
+from Testing.ZopeTestCase import installPackage, installProduct
 
 from zope.component import queryMultiAdapter
 
@@ -41,7 +43,7 @@ class FormulatorFieldTestCase(SilvaTestCase.SilvaTestCase):
         form = root.form
         form.manage_addProduct['Formulator'].manage_addField(
             'captcha_field', 'Test Captcha Field', 'CaptchaField')
-        
+
         # i don't think it ever generates 'foo', but still...
         words = captcha._generate_words()
         teststr = 'foo'
@@ -54,22 +56,25 @@ class FormulatorFieldTestCase(SilvaTestCase.SilvaTestCase):
         form.validate_all({'field_captcha_field': words[0]})
 
 
-from Testing.ZopeTestCase.layer import onsetup as ZopeLiteLayerSetup
-
 @ZopeLiteLayerSetup
-def installPackage(name):
-    # plone sux0rZ
-    ztc.installPackage(name)
-
-import unittest
-def test_suite():
-
-    # Load the Zope Product
+def installCaptcha():
     installPackage('silva.captcha')
 
     # Load our ZCML, which add the extension as a Product
     from silva import captcha
     zcml.load_config('configure.zcml', captcha)
+
+
+import unittest
+def test_suite():
+
+    # Install GenericSetup if it's there.
+    try:
+        import Products.GenericSetup
+        installProduct('GenericSetup')
+    except ImportError:
+        pass
+    installCaptcha()
 
     # Run tests
     suite = unittest.TestSuite()

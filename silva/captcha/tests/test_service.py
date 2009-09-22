@@ -6,12 +6,10 @@ from zope.component import queryMultiAdapter
 from silva.captcha import validate
 
 from Products.Five import zcml
-from Products import Five
-zcml.load_config('meta.zcml', Five)
-zcml.load_config('configure.zcml', Five)
 
 from Products.Silva.tests import SilvaTestCase
-from Testing import ZopeTestCase as ztc
+from Testing.ZopeTestCase.layer import onsetup as ZopeLiteLayerSetup
+from Testing.ZopeTestCase import installProduct, installPackage
 
 
 class CaptchaTestCase(SilvaTestCase.SilvaTestCase):
@@ -49,22 +47,25 @@ class CaptchaTestCase(SilvaTestCase.SilvaTestCase):
         self.failIf(root.service_extensions.is_installed('silva.captcha'))
 
 
-from Testing.ZopeTestCase.layer import onsetup as ZopeLiteLayerSetup
-
 @ZopeLiteLayerSetup
-def installPackage(name):
-    # plone sux0rZ
-    ztc.installPackage(name)
-
-import unittest
-def test_suite():
-
-    # Load the Zope Product
+def installCaptcha():
     installPackage('silva.captcha')
 
     # Load our ZCML, which add the extension as a Product
     from silva import captcha
     zcml.load_config('configure.zcml', captcha)
+
+
+import unittest
+def test_suite():
+
+    # Install GenericSetup if it's there.
+    try:
+        import Products.GenericSetup
+        installProduct('GenericSetup')
+    except ImportError:
+        pass
+    installCaptcha()
 
     # Run tests
     suite = unittest.TestSuite()
