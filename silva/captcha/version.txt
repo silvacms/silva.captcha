@@ -1,1 +1,0 @@
-SilvaCaptcha 1.3 (unreleased)
