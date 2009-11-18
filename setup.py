@@ -5,7 +5,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.2.1dev'
+version = '1.2.1'
 
 setup(name='silva.captcha',
       version=version,
