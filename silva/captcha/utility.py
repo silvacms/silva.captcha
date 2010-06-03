@@ -11,7 +11,7 @@ from plone.keyring.keyring import Keyring
 from OFS.Folder import Folder
 from OFS.SimpleItem import SimpleItem
 
-class SilvaKeyring(Keyring, SimpleItem):
+class SilvaKeyring(Keyring):
     pass
 
 class SilvaKeyManager(Folder):
