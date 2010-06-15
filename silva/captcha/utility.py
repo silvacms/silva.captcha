@@ -8,43 +8,34 @@ from persistent.mapping import PersistentMapping
 from plone.keyring.interfaces import IKeyManager
 from plone.keyring.keyring import Keyring
 
-from OFS.Folder import Folder
+from OFS.SimpleItem import SimpleItem
 
 
-class SilvaKeyring(Keyring):
-    pass
-
-class SilvaKeyManager(Folder):
+class SilvaKeyManager(SimpleItem):
 
     implements(IKeyManager)
 
     meta_type = 'Silva Key Manager'
+    __keyrings = {}
 
     def __init__(self):
-        Folder.__init__(self)
-        self._setObject("system", SilvaKeyring())
-        self["system"].rotate()
-
-
-    def _newContainerData(self):
-        return PersistentMapping()
-
+        SimpleItem.__init__(self)
+        self.__keyrings["system"] = Keyring()
+        self.__keyrings["system"].rotate()
 
     def clear(self, ring="system"):
         if ring is None:
             for ring in self.values():
                 ring.clear()
         else:
-            self[ring].clear()
-
+            self.__keyrings[ring].clear()
 
     def rotate(self, ring="system"):
         if ring is None:
             for ring in self.values():
                 ring.rotate()
         else:
-            self[ring].rotate()
-
+            self.__keyrings[ring].rotate()
 
     def secret(self, ring="system"):
-        return self[ring].current
+        return self.__keyrings[ring].current
