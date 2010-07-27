@@ -7,6 +7,10 @@ import os
 
 version = '1.3dev'
 
+tests_require = [
+    'Products.Silva [test]',
+    ]
+
 setup(name='silva.captcha',
       version=version,
       description="Captcha support for Silva",
@@ -23,7 +27,8 @@ setup(name='silva.captcha',
       author_email='info@infrae.com',
       url='https://svn.infrae.com/silva.captcha/trunk',
       license='BSD',
-      packages=find_packages(exclude=['ez_setup']),
+      package_dir={'': 'src'},
+      packages=find_packages('src'),
       namespace_packages=['silva'],
       include_package_data=True,
       zip_safe=False,
@@ -31,5 +36,10 @@ setup(name='silva.captcha',
         'setuptools',
         'collective.captcha',
         'silva.core.upgrade',
+        'zope.interface',
+        'zope.component',
+        'Products.Formulator',
         ],
+      tests_require = tests_require,
+      extras_require = {'test': tests_require},
       )
