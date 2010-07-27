@@ -2,12 +2,10 @@
 # See also LICENSE.txt
 # $Id$
 
-
 from plone.keyring.interfaces import IKeyManager
+from silva.captcha.utility import SilvaKeyManager
 from silva.core.upgrade.localsite import activate, disable
 from zope.component import queryUtility
-
-from utility import SilvaKeyManager
 
 
 def install(context):

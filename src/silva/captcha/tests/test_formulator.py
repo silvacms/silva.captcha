@@ -5,15 +5,13 @@
 from Products.Five import zcml
 
 from Products.Silva.tests import SilvaTestCase
-
+from Products.Formulator import Form
 from Testing.ZopeTestCase.layer import onsetup as ZopeLiteLayerSetup
 from Testing.ZopeTestCase import installPackage, installProduct
 
 from zope.component import queryMultiAdapter
 
-from silva.captcha import formulator
-from Products.Formulator import Form
-from Products.Formulator import Errors
+
 
 class Container(dict):
     """ dict with getattr access to items

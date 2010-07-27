@@ -4,20 +4,16 @@
 
 from zope.component import getMultiAdapter
 from AccessControl import ModuleSecurityInfo, allow_module
-from Products.Silva.ExtensionRegistry import extensionRegistry
-
-import formulator
 from Products.Formulator.FieldRegistry import FieldRegistry
-from Products.Formulator import StandardFields
 
-import install
+from silva.captcha import formulator
+from silva.captcha import install
+from silva.core import conf as silvaconf
+
+silvaconf.extensionName('silva.captcha')
+silvaconf.extensionTitle('Silva Captcha')
 
 FieldRegistry.registerField(formulator.CaptchaField) # XXX fix icon
-
-def initialize(context):
-    extensionRegistry.register(
-        'silva.captcha', 'Silva Captcha', context, [],
-        install, depends_on='Silva')
 
 allow_module('silva.captcha')
 module_security = ModuleSecurityInfo('silva.captcha')

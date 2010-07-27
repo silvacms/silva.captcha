@@ -2,11 +2,9 @@
 # See also LICENSE.txt
 # $Id$
 
-from zope.interface import implements
-from persistent.mapping import PersistentMapping
-
 from plone.keyring.interfaces import IKeyManager
 from plone.keyring.keyring import Keyring
+from zope.interface import implements
 
 from OFS.SimpleItem import SimpleItem
 
