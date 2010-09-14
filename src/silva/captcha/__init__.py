@@ -7,11 +7,6 @@ from AccessControl import ModuleSecurityInfo, allow_module
 from Products.Formulator.FieldRegistry import FieldRegistry
 
 from silva.captcha import formulator
-from silva.captcha import install
-from silva.core import conf as silvaconf
-
-silvaconf.extensionName('silva.captcha')
-silvaconf.extensionTitle('Silva Captcha')
 
 FieldRegistry.registerField(formulator.CaptchaField) # XXX fix icon
 
