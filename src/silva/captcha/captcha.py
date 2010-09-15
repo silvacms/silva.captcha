@@ -143,6 +143,8 @@ class Captcha(grok.View):
         return self.image_tag()
 
     def verify(self, input):
+        if not input:
+            return False
         result = False
         try:
             for word in self._generate_words():
