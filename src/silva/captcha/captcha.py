@@ -54,7 +54,7 @@ class ImageCaptcha(RenderedCaptcha):
 
     def __call__(self):
         self.set_headers('image/png')
-        return skimpyAPI.Png(self.word, fontpath=FONTPATH).data()
+        return skimpyAPI.Png(self.word, speckle=0.5, fontpath=FONTPATH).data()
 
 
 class AudioCaptcha(RenderedCaptcha):

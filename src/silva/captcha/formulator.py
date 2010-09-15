@@ -1,10 +1,14 @@
+# -*- coding: utf-8 -*-
+# Copyright (c) 2010 Infrae. All rights reserved.
+# See also LICENSE.txt
+# $Id$
+
 from Products.Formulator import Validator
 from Products.Formulator import Widget
 from Products.Formulator import Field
-from Products.Formulator import StandardFields
-from Products.Formulator import DummyField
 from Products.Formulator.i18n import translate as _
 from zope.component import queryMultiAdapter
+
 
 class CaptchaValidator(Validator.Validator):
     """ validate the captcha
@@ -18,11 +22,12 @@ class CaptchaValidator(Validator.Validator):
         value = REQUEST.get(key, '')
         if value == '':
             self.raise_error('required_not_found', field)
-        root = field.get_root() # XXX not sure
+
         captcha = queryMultiAdapter((field, field.REQUEST), name='captcha')
         if not captcha.verify(value):
             self.raise_error('captcha_invalid', field)
         return True # we don't need to return the value, it doesn't matter
+
 
 CaptchaValidatorInstance = CaptchaValidator()
 
@@ -33,11 +38,10 @@ class CaptchaWidget(Widget.Widget):
         renders the image and an input field
     """
     property_names = ['title', 'description', 'css_class', 'alternate_name']
-    
+
     def render(self, field, key, value, REQUEST):
         """ render the widget
         """
-        root = field.get_root() # XXX not sure
         captcha = queryMultiAdapter((field, field.REQUEST), name='captcha')
         image = captcha.image_tag()
         input = Widget.render_element(
@@ -52,6 +56,7 @@ class CaptchaWidget(Widget.Widget):
 
     def render_view(self, field, value):
         return ''
+
 
 CaptchaWidgetInstance = CaptchaWidget()
 
