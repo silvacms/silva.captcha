@@ -42,6 +42,11 @@ setup(name='silva.captcha',
         'zope.interface',
         'zope.traversing',
         ],
+      entry_points="""
+      # -*- Entry points: -*-
+      [zeam.form.components]
+      captcha = silva.captcha.zeamform:register
+      """,
       tests_require = tests_require,
       extras_require = {'test': tests_require},
       )

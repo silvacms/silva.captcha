@@ -5,6 +5,7 @@
     xmlns:five="http://namespaces.zope.org/five">
 
   <include package="five.grok" />
+  <include package="zeam.form.silva" />
 
   <five:registerPackage package="." />
   <grok:grok package="." />

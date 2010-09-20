@@ -7,6 +7,7 @@ from AccessControl import ModuleSecurityInfo, allow_module
 from Products.Formulator.FieldRegistry import FieldRegistry
 
 from silva.captcha import formulator
+from silva.captcha.field import Captcha
 
 FieldRegistry.registerField(formulator.CaptchaField) # XXX fix icon
 
