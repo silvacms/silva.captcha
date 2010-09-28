@@ -34,7 +34,6 @@ class FormulatorFieldTestCase(unittest.TestCase):
         factory.manage_add('form', 'Test form')
         factory = root.form.manage_addProduct['Formulator']
         factory.manage_addField('captcha_field', 'Test Captcha', 'CaptchaField')
-        root.form.field_added('captcha_field')
 
         self.assertEqual(len(root.form.get_fields()), 1)
 
