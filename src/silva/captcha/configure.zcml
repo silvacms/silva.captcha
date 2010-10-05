@@ -5,9 +5,11 @@
     xmlns:five="http://namespaces.zope.org/five">
 
   <include package="five.grok" />
-  <include package="zeam.form.silva" />
+  <include package="zeam.form.base" />
+  <include package="zeam.form.ztk" />
   <include package="Products.Formulator" />
 
+  <!-- Register and grok this package. -->
   <five:registerPackage package="." />
   <grok:grok package="." />
 
