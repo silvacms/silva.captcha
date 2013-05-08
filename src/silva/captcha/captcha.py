@@ -133,7 +133,7 @@ class Captcha(grok.View):
 
     def image_tag(self):
         self._generate_session()
-        return '<img src="%s" />' % (self._url('image.png'),)
+        return '<img src="%s" alt="captcha"/>' % (self._url('image.png'),)
 
     def audio_url(self):
         self._generate_session()
@@ -152,7 +152,7 @@ class Captcha(grok.View):
             # Delete the session key, we are done with this captcha
             self.request.response.expireCookie(COOKIE_ID, path='/')
         except KeyError:
-            pass # No cookie
+            pass  # No cookie
 
         return result
 
