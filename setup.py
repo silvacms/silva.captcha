@@ -13,7 +13,7 @@ tests_require = [
 
 setup(name='silva.captcha',
       version=version,
-      description="Captcha support for Silva",
+      description="Captcha support for Silva CMS",
       long_description=open("README.txt").read() + "\n" +
                        open(os.path.join("docs", "HISTORY.txt")).read(),
       classifiers=[
@@ -25,7 +25,7 @@ setup(name='silva.captcha',
       keywords='captcha silva',
       author='Sylvain Viollon',
       author_email='info@infrae.com',
-      url='https://svn.infrae.com/silva.captcha/trunk',
+      url='https://github.com/silvacms/silva.captcha',
       license='BSD',
       package_dir={'': 'src'},
       packages=find_packages('src'),
