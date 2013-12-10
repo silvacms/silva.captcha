@@ -61,4 +61,4 @@ You can find the code of this extension in Git:
 https://github.com/silvacms/silva.captcha.
 
 
-.. _Silva: http://infrae.com/products/silva
+.. _Silva: http://silvacms.org
