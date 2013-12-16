@@ -55,7 +55,7 @@ This will validate (or not) the input of the captcha.
 
 
 Code repository
-===============
+---------------
 
 You can find the code of this extension in Git:
 https://github.com/silvacms/silva.captcha.
